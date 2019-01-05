@@ -1,8 +1,35 @@
+
 var Queue = function() {
-  // Hey! Rewrite in the new style. Your code will wind up looking very similar,
-  // but try not not reference your old code in writing the new style.
+  var cue = Object.create(queueMethods);
+  _.extend(cue, queueKeys);
+  return cue;
 };
 
-var queueMethods = {};
+const queueKeys = {
+  lineLen: 0,
+  total: 0
+};
+
+const queueMethods = {
+  head() {
+    return this.total - this.lineLen;
+  },
+  enqueue(string) {
+    this[this.total] = string;
+    this.total++;
+    this.lineLen++;
+  },
+  dequeue() {
+    if (this.lineLen > 0) {
+      var keep = this[this.head()];
+      delete this[this.head()];
+      this.lineLen--;
+      return keep;
+    }
+  },
+  size() {
+    return this.lineLen;
+  }
+};
 
 

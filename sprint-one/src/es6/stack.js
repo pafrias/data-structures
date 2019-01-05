@@ -1,7 +1,14 @@
 class Stack {
-  // Hey! Rewrite in the new style. Your code will wind up looking very similar,
-  // but try not not reference your old code in writing the new style.
   constructor() {
+    this.cache = [];
   }
-
+  push(string) {
+    this.cache.push(string);
+  }
+  pop() {
+    return this.cache.pop();
+  }
+  size() {
+    return this.cache.length;
+  }
 }

@@ -1,6 +1,15 @@
 var Queue = function() {
-  // Hey! Rewrite in the new style. Your code will wind up looking very similar,
-  // but try not not reference your old code in writing the new style.
+  this.cache = [];
 };
 
+Queue.prototype.enqueue = function(string) {
+  this.cache.push(string);
+};
 
+Queue.prototype.dequeue = function() {
+  return this.cache.shift();
+};
+
+Queue.prototype.size = function() {
+  return this.cache.length;
+};
