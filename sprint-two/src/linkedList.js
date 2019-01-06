@@ -15,19 +15,6 @@ var LinkedList = function() {
       this.tail = x;
     }
     
-    /*
-    
-    #save new Node(value) as a variable
-    #catch if no current tail/1st time
-    #  update head and tail
-    #  else update tail
-    #list.tail points to new tail
-    #list.tail becomes the new tail
-    
-    attach new Node to list
-    
-    */
-    
   };
 
   list.removeHead = function() {
@@ -35,45 +22,21 @@ var LinkedList = function() {
     this.head = this.head.next;
     return oldHead;
     
-    /*
-    
-    save current head as oldHead
-    this.head becomes this.head.next
-    
-    return oldHead
-    */
-    
   };
 
   list.contains = function(target) {
-    if(arguments[1]) {
-      if(arguments[1].value === target) {
-        return true;
-      } else {
-        
-      }
+    if (this.value === undefined) {
+      var context = this.head;
+    } else {
+      var context = this;
     }
-    
-    /*
-    if (arg[1]) {
-      check arg1.value
-      retrn true
-      if no match and arg1.next
-        recurse on arg1.next
-      
-    } else
-    
-    if head.value is target
-      return true
-      check head for target
-    */
-    
-    /* 
-    if this.value exists
-      check if it matches
-    else 
-      recurse
-    */
+    if (context.value === target) {
+      return true;
+    } else if (context.next) {
+      return list.contains.call(context.next, target);
+    } else {
+      return false;
+    }
   };
 
   return list;
@@ -90,4 +53,7 @@ var Node = function(value) {
 
 /*
  * Complexity: What is the time complexity of the above functions?
+  addToTail() has a time complexity of O(1)
+  removeHead() has a time complexity of O(1)
+  contains has a time complexity of O(n)
  */
