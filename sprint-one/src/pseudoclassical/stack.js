@@ -4,8 +4,8 @@ var Stack = function() {
 
 Stack.prototype.pop = function() {
   if (this._size > 0) {
-    var keep = this[this._size];
-    delete this[this._size];
+    var keep = this[this._size - 1];
+    delete this[this._size - 1];
     this._size--;
     return keep;
   }

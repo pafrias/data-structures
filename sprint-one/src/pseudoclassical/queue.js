@@ -1,5 +1,6 @@
 var Queue = function() {
-  this.cache = [];
+  this.len = 0;
+  this.last = 0;
 };
 
 Queue.prototype.enqueue = function(string) {
