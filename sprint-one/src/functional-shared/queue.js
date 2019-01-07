@@ -1,13 +1,12 @@
 var Queue = function() {
   var newStorage = {};
+  newStorage.currentLength = 0;
+  newStorage.totalQueries = 0;
   return _.extend(newStorage, queueMethods);
 };
 
 
 var queueMethods = {
-
-  currentLength: 0,
-  totalQueries: 0,
   
   firstInLine() {
     return this.totalQueries - this.currentLength;

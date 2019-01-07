@@ -1,8 +1,8 @@
 
 var Queue = function() {
-  var cue = Object.create(queueMethods);
-  _.extend(cue, queueKeys);
-  return cue;
+  var queue = Object.create(queueMethods);
+  _.extend(queue, queueKeys);
+  return queue;
 };
 
 const queueKeys = {

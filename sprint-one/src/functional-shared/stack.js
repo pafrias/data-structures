@@ -1,11 +1,11 @@
 var Stack = function() {
   var stack = {};
+  stack.len = 0;
   _.extend(stack, stackMethods);
   return stack;
 };
 
 var stackMethods = {
-  len: 0,
   pop() {
     if (this.len > 0) {
       var result = this[this.len - 1];

@@ -1,8 +1,6 @@
 var Stack = function() { //assumes inputs and outputs are strings
   var someInstance = {};
-
   var storage = {};
-
   someInstance.len = 0;
 
   someInstance.push = function(value) {
@@ -12,11 +10,11 @@ var Stack = function() { //assumes inputs and outputs are strings
 
   someInstance.pop = function() {
     if (someInstance.len > 0) {
-    var x = storage[someInstance.len - 1];
-    delete storage[someInstance.len - 1];
-    someInstance.len--;
-    return x;
-    };
+      var x = storage[someInstance.len - 1];
+      delete storage[someInstance.len - 1];
+      someInstance.len--;
+      return x;
+    }
   };
 
   someInstance.size = function() {

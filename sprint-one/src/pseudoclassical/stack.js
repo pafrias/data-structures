@@ -1,13 +1,19 @@
 var Stack = function() {
-  this.cache = [];
+  this._size = 0;
 };
 
 Stack.prototype.pop = function() {
-  return this.cache.pop();
+  if (this._size > 0) {
+    var keep = this[this._size];
+    delete this[this._size];
+    this._size--;
+    return keep;
+  }
 };
 Stack.prototype.push = function(string) {
-  this.cache.push(string);
+  this[this._size] = string;
+  this._size++;
 };
 Stack.prototype.size = function() {
-  return this.cache.length;
+  return this._size;
 };
