@@ -4,32 +4,38 @@ var Graph = function() {
 
 // Add a node to the graph, passing in the node's value.
 Graph.prototype.addNode = function(value) {
+  var key = this.convert(value);
   var obj = {};
-  obj.value = value;
+  obj.value = value; //
   obj.edges = [];
-  this[value] = obj;
+  this[key] = obj;
 };
 
 // Return a boolean value indicating if the value passed to contains is represented in the graph.
 Graph.prototype.contains = function(target) {
-  return !(this[target] === undefined);
+  var key = this.convert(target);
+  return !(this[key] === undefined);
 };
 
 // Removes a node from the graph.
 Graph.prototype.removeNode = function(node) {
+  var key = this.convert(node);
   var context = this;
-  if (this[node].edges.length > 0) {
-    _.each(this[node].edges, function(edge) {
-      context.removeEdge(node, edge.value);
+  if (this[key].edges.length > 0) {
+    _.each(this[key].edges, function(edge) {
+      context.removeEdge(key, edge.value);
     });
   }
-  delete this[node];
+  delete this[key];
 };
 
 // Returns a boolean indicating whether two specified nodes are connected.  Pass in the values contained in each of the two nodes.
 Graph.prototype.hasEdge = function(fromNode, toNode) {
-  if (this[fromNode] && this[toNode]) {
-    return _.reduce(this[fromNode].edges, function(memo, edge) {
+  var fromKey = this.convert(fromNode);
+  var toKey = this.convert(toNode);
+  
+  if (this[fromKey] && this[toKey]) {
+    return _.reduce(this[fromKey].edges, function(memo, edge) {
       if (edge.value === toNode || memo) {
         return true;
       } else {
@@ -43,28 +49,48 @@ Graph.prototype.hasEdge = function(fromNode, toNode) {
 
 // Connects two nodes in a graph by adding an edge between them.
 Graph.prototype.addEdge = function(fromNode, toNode) {
-  if (this[fromNode] && this[toNode]) {
-    this[fromNode].edges.push(this[toNode]);
-    this[toNode].edges.push(this[fromNode]);
+  var fromKey = this.convert(fromNode);
+  var toKey = this.convert(toNode);
+  
+  if (this[fromKey] && this[toKey]) {
+    this[fromKey].edges.push(this[toKey]);
+    this[toKey].edges.push(this[fromKey]);
   }
 };
 
 // Remove an edge between any two specified (by value) nodes.
 Graph.prototype.removeEdge = function(fromNode, toNode) {
-  if (this[fromNode] && this[toNode]) {
-    this[fromNode].edges = _.filter(this[fromNode].edges, function(edge) {
+  var fromKey = this.convert(fromNode);
+  var toKey = this.convert(toNode);
+  
+  if (this[fromKey] && this[toKey]) {
+    this[fromKey].edges = _.filter(this[fromKey].edges, function(edge) {
       return (edge.value !== toNode);
     });
-    this[toNode].edges = _.filter(this[toNode].edges, function(edge) {
+    this[toKey].edges = _.filter(this[toKey].edges, function(edge) {
       return (edge.value !== fromNode);
     });
   }
 };
 
-// Pass in a callback which will be executed on each node of the graph.
+// Pass in a callback which will be executed on each node(value) of the graph.
 Graph.prototype.forEachNode = function(func) {
   var keys = Object.keys(this);
-  _.each(keys, func);
+  var values = _.map(keys, function(key) {
+    return this[key].value;
+  }, this);
+  _.each(values, func);
+};
+
+//allows for multiple data-types
+Graph.prototype.convert = function(key) { 
+  if (typeof key === 'string') {
+    return 'str' + key;
+  } else if (typeof key === 'number') {
+    return 'num' + key.toString();
+  } else if (typeof key === 'boolean') {
+    return 'bool' + key.toString();
+  }
 };
 
 /*
@@ -79,5 +105,6 @@ Graph.prototype.forEachNode = function(func) {
  * hasEdge() has a time complexity of O(n)
  * removeEdge() has a time complexity of O(n)
  * forEachNode() has a time complexity of O(n)
+ * convert() has a time complexity of O(1)
  */
 

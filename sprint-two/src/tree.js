@@ -16,7 +16,6 @@ treeMethods.addChild = function(value) {
 };
 
 treeMethods.contains = function(target) {
-  
   if (this.value === target) {
     return true;
   } else if (this.children.length > 0) {
@@ -32,8 +31,28 @@ treeMethods.contains = function(target) {
   }
 };
   
+treeMethods.removeFromParent = function() {
+  if (this.parent === null) {
+    //throw error
+  } else {
+    var compare = this.value;
+    this.parent.children = _.filter(this.parent.children, function(child) {
+      return (child.value !== compare);
+    });
+    this.parent = null;
+  }
+};
 
-
+treeMethods.traverse = function(func) {
+  if (this.value !== undefined) {
+    func(this.value);
+  }
+  if (this.children.length > 0) {
+    _.each(this.children, function(child) {
+      child.traverse(func);
+    });
+  }
+};
 
 
 /*

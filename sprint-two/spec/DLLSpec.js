@@ -88,7 +88,6 @@ describe('doublyLinkedList', function () {
   });
   
   it('should recognize a single value as head and tail', function() {
-    debugger;
     doubleList.addToHead(5);
     expect(doubleList.removeTail()).to.equal(5);
     doubleList.addToTail(6);

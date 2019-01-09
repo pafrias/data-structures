@@ -68,4 +68,26 @@ describe('graph', function() {
     expect(graph.hasEdge(3, 5)).to.equal(true);
     expect(graph.hasEdge(5, 5)).to.equal(true);
   });
+  
+  it('should handle string values', function() {
+    graph.addNode(123);
+    graph.addNode('123');
+    expect(graph.contains(123)).to.equal(true);
+    expect(graph.contains('123')).to.equal(true);
+    graph.removeNode(123);
+    expect(graph.contains(123)).to.equal(false);
+    expect(graph.contains('123')).to.equal(true);
+  });
+  
+  it('should handle boolean values', function() {
+    graph.addNode(true);
+    graph.addNode(false);
+    graph.addNode('false');
+    expect(graph.contains('true')).to.equal(false);
+    expect(graph.contains(false)).to.equal(true);
+    graph.removeNode('false');
+    expect(graph.contains(false)).to.equal(true);
+  });
+  
+  
 });
